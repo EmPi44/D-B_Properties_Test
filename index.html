@@ -1514,7 +1514,7 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
         <img src="https://cdn-icons-png.flaticon.com/512/1384/1384067.png" alt="Chat Icon">
     </div>
     <div id="chatbot-container" style="display:none;">
-        <button id="end-chat-btn" tabindex="-1" label="End Chat" class="c-dzcdPv vfrc-button c-jjMiVY vfrc-button--primary c-bXTvXv c-bXTvXv-XJvOL-type-warn">End Chat</button>
+        <!-- The Voiceflow chat will be embedded here -->
     </div>
 
     <script type="text/javascript">
@@ -1523,7 +1523,6 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 
             const chatbotIcon = document.getElementById('chatbot-icon');
             const chatbotContainer = document.getElementById('chatbot-container');
-            const endChatBtn = document.getElementById('end-chat-btn');
 
             chatbotIcon.addEventListener('click', function() {
                 console.log("Chat icon clicked"); // Debugging
@@ -1551,11 +1550,24 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
                 })(document, 'script');
             });
 
-            endChatBtn.addEventListener('click', function() {
-                console.log("End Chat button clicked"); // Debugging
-                chatbotContainer.style.display = 'none';
-                chatbotIcon.style.display = 'block';
+            const observer = new MutationObserver((mutationsList, observer) => {
+                for (let mutation of mutationsList) {
+                    if (mutation.type === 'childList') {
+                        const endChatBtn = document.querySelector('.vfrc-prompt .vfrc-button--primary.c-bXTvXv-XJvOL-type-warn');
+                        if (endChatBtn) {
+                            endChatBtn.addEventListener('click', function() {
+                                console.log("End Chat button clicked"); // Debugging
+                                chatbotContainer.style.display = 'none';
+                                chatbotIcon.style.display = 'block';
+                            });
+                            observer.disconnect(); // Stop observing once we've attached the event listener
+                            break;
+                        }
+                    }
+                }
             });
+
+            observer.observe(chatbotContainer, { childList: true, subtree: true });
         });
     </script>
 </body>
