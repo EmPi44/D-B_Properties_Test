@@ -328,43 +328,71 @@ ol, ul {
 /* cookies btn hide */
 		</style>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<style>
-  #chatbot-container {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40%;
-    height: 80%;
-    z-index: 1000;
-    border: 2px solid #ccc; /* Optional: Add border to the container */
-    background-color: white; /* Optional: Add background color */
-  }
-  .vfrc-chat {
-    width: 100%;
-    height: 100%;
-  }
-  #chatbot-icon {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background-color: #007bff;
-    border-radius: 50%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  #chatbot-icon img {
-    width: 70%;
-    height: 70%;
-  }
-</style>
+ <div id="chatbot-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384067.png" alt="Chat Icon">
+    </div>
+    <div id="chatbot-container" style="display:none;">
+        <!-- The Voiceflow chat will be embedded here -->
+    </div>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', (event) => {
+            console.log("Document loaded and DOM fully built");
+
+            const chatbotIcon = document.getElementById('chatbot-icon');
+            const chatbotContainer = document.getElementById('chatbot-container');
+
+            chatbotIcon.addEventListener('click', function() {
+                console.log("Chat icon clicked"); // Debugging
+                chatbotContainer.style.display = 'block';
+                chatbotIcon.style.display = 'none';
+                
+                (function(d, t) {
+                    var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                    v.onload = function() {
+                        console.log("Voiceflow script loaded"); // Debugging
+                        window.voiceflow.chat.load({
+                            verify: { projectID: '661177d3da0ccc92fa634e1e' },
+                            url: 'https://general-runtime.voiceflow.com',
+                            versionID: 'production',
+                            render: {
+                                mode: 'embedded',
+                                target: chatbotContainer,
+                            },
+                            autostart: true
+                        });
+                    }
+                    v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
+                    v.type = "text/javascript"; 
+                    s.parentNode.insertBefore(v, s);
+                })(document, 'script');
+            });
+
+            const observer = new MutationObserver((mutationsList, observer) => {
+                for (let mutation of mutationsList) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const article = document.querySelector('.vfrc-chat');
+                        if (article && article.classList.contains('c-ealvbK-jVNirx-withPrompt-true')) {
+                            const endChatBtn = document.querySelector('.vfrc-prompt .vfrc-button--primary.c-bXTvXv-XJvOL-type-warn');
+                            if (endChatBtn) {
+                                endChatBtn.addEventListener('click', function() {
+                                    console.log("End Chat button clicked"); // Debugging
+                                    chatbotContainer.style.display = 'none';
+                                    chatbotIcon.style.display = 'block';
+                                });
+                                observer.disconnect(); // Stop observing once we've attached the event listener
+                            }
+                        }
+                    }
+                }
+            });
+
+            const article = document.querySelector('.vfrc-chat');
+            if (article) {
+                observer.observe(article, { attributes: true });
+            }
+        });
+    </script>
 </head>
 <body class="home page-template page-template-elementor_canvas page page-id-2 page-parent ast-desktop ast-page-builder-template ast-no-sidebar astra-4.6.14 ast-single-post ast-inherit-site-logo-transparent ast-hfb-header elementor-default elementor-template-canvas elementor-kit-7 elementor-page elementor-page-2">
 	<!-- Google Tag Manager (noscript) -->
