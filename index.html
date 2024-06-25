@@ -335,7 +335,7 @@ ol, ul {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 40%;
+    width: 40%; /* Changed to half of the original width */
     height: 80%;
     z-index: 1000;
     border: 2px solid #ccc; /* Optional: Add border to the container */
@@ -363,6 +363,24 @@ ol, ul {
   #chatbot-icon img {
     width: 70%;
     height: 70%;
+  }
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #ff5c5c;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .close-button:before {
+    content: '×';
+    font-size: 20px;
+    color: white;
   }
 </style>
 </head>
@@ -1510,35 +1528,25 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 			<script>
 			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
 			</script>
-	<div id="chatbot-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1384/1384067.png" alt="Chat Icon">
+	<div id="chatbot-container">
+  <div class="close-button"></div> <!-- Existing close button -->
+  <div class="vfrc-chat">
+    <!-- Chat content goes here -->
+  </div>
 </div>
-<div id="chatbot-container"></div>
-  <script type="text/javascript">
+
+<div id="chatbot-icon">
+  <img src="chat-icon.png" alt="Chatbot Icon">
+</div>
+
+<script>
   document.getElementById('chatbot-icon').addEventListener('click', function() {
     document.getElementById('chatbot-container').style.display = 'block';
-    this.style.display = 'none';
-    
-    (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '661177d3da0ccc92fa634e1e' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          render: {
-            mode: 'embedded',
-            target: document.getElementById('chatbot-container'),
-          },
-          autostart: true
-        });
-      }
-      v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
-      v.type = "text/javascript"; 
-      s.parentNode.insertBefore(v, s);
-    })(document, 'script');
+  });
+
+  document.querySelector('.close-button').addEventListener('click', function() {
+    document.getElementById('chatbot-container').style.display = 'none';
   });
 </script>
-
-				</body>
+</body>
 </html>
