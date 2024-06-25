@@ -1513,8 +1513,11 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 	<div id="chatbot-icon">
   <img src="https://cdn-icons-png.flaticon.com/512/1384/1384067.png" alt="Chat Icon">
 </div>
-<div id="chatbot-container"></div>
-  <script type="text/javascript">
+<div id="chatbot-container" style="display:none;">
+  <button id="end-chat-btn" tabindex="-1" label="End Chat" class="c-dzcdPv vfrc-button c-jjMiVY vfrc-button--primary c-bXTvXv c-bXTvXv-XJvOL-type-warn">End Chat</button>
+</div>
+
+<script type="text/javascript">
   document.getElementById('chatbot-icon').addEventListener('click', function() {
     document.getElementById('chatbot-container').style.display = 'block';
     this.style.display = 'none';
@@ -1538,7 +1541,11 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
       s.parentNode.insertBefore(v, s);
     })(document, 'script');
   });
-</script>
 
+  document.getElementById('end-chat-btn').addEventListener('click', function() {
+    document.getElementById('chatbot-container').style.display = 'none';
+    document.getElementById('chatbot-icon').style.display = 'block';
+  });
+</script>
 				</body>
 </html>
