@@ -364,6 +364,9 @@ ol, ul {
     width: 70%;
     height: 70%;
   }
+  .blur-background {
+    filter: blur(5px);
+  }
 </style>
 </head>
 <body class="home page-template page-template-elementor_canvas page page-id-2 page-parent ast-desktop ast-page-builder-template ast-no-sidebar astra-4.6.14 ast-single-post ast-inherit-site-logo-transparent ast-hfb-header elementor-default elementor-template-canvas elementor-kit-7 elementor-page elementor-page-2">
@@ -1518,7 +1521,10 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
   document.getElementById('chatbot-icon').addEventListener('click', function() {
     document.getElementById('chatbot-container').style.display = 'block';
     this.style.display = 'none';
-    
+
+    // Apply blur effect to the background
+    document.body.classList.add('blur-background');
+
     (function(d, t) {
       var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
       v.onload = function() {
@@ -1539,6 +1545,7 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
     })(document, 'script');
   });
 </script>
+
 
 				</body>
 </html>
