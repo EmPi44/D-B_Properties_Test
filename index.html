@@ -1510,44 +1510,45 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 			<script>
 			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
 			</script>
-	<div id="chatbot-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1384/1384067.png" alt="Chat Icon">
-</div>
-<div id="chatbot-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1384/1384067.png" alt="Chat Icon">
-</div>
-<div id="chatbot-container">
-  <button id="end-chat-btn" tabindex="-1" label="End Chat" class="c-dzcdPv vfrc-button c-jjMiVY vfrc-button--primary c-bXTvXv c-bXTvXv-XJvOL-type-warn">End Chat</button>
-</div>
-<script type="text/javascript">
-  document.getElementById('chatbot-icon').addEventListener('click', function() {
-    document.getElementById('chatbot-container').style.display = 'block';
-    this.style.display = 'none';
-    
-    (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '661177d3da0ccc92fa634e1e' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          render: {
-            mode: 'embedded',
-            target: document.getElementById('chatbot-container'),
-          },
-          autostart: true
-        });
-      }
-      v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
-      v.type = "text/javascript"; 
-      s.parentNode.insertBefore(v, s);
-    })(document, 'script');
-  });
+	 <div id="chatbot-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384067.png" alt="Chat Icon">
+    </div>
+    <div id="chatbot-container" style="display:none;">
+        <button id="end-chat-btn" tabindex="-1" label="End Chat" class="c-dzcdPv vfrc-button c-jjMiVY vfrc-button--primary c-bXTvXv c-bXTvXv-XJvOL-type-warn">End Chat</button>
+    </div>
 
-  document.getElementById('end-chat-btn').addEventListener('click', function() {
-    document.getElementById('chatbot-container').style.display = 'none';
-    document.getElementById('chatbot-icon').style.display = 'block';
-  });
-</script>
+    <script type="text/javascript">
+        document.getElementById('chatbot-icon').addEventListener('click', function() {
+            console.log("Chat icon clicked"); // Debugging
+            document.getElementById('chatbot-container').style.display = 'block';
+            this.style.display = 'none';
+            
+            (function(d, t) {
+                var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                v.onload = function() {
+                    console.log("Voiceflow script loaded"); // Debugging
+                    window.voiceflow.chat.load({
+                        verify: { projectID: '661177d3da0ccc92fa634e1e' },
+                        url: 'https://general-runtime.voiceflow.com',
+                        versionID: 'production',
+                        render: {
+                            mode: 'embedded',
+                            target: document.getElementById('chatbot-container'),
+                        },
+                        autostart: true
+                    });
+                }
+                v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
+                v.type = "text/javascript"; 
+                s.parentNode.insertBefore(v, s);
+            })(document, 'script');
+        });
+
+        document.getElementById('end-chat-btn').addEventListener('click', function() {
+            console.log("End Chat button clicked"); // Debugging
+            document.getElementById('chatbot-container').style.display = 'none';
+            document.getElementById('chatbot-icon').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
