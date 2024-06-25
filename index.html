@@ -1526,35 +1526,37 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 			<script>
 			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
 			</script>
-	 <div id="chatbot-icon">
-    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384067.png" alt="Chat Icon">
-  </div>
-  <div id="chatbot-container"></div>
-  <script>
-  document.getElementById('chatbot-icon').addEventListener('click', function() {
-    document.getElementById('chatbot-container').style.display = 'block';
-    document.body.classList.add('blur-background');
-    this.style.display = 'none';
+	 </div>
+    <div id="overlay" class="overlay"></div>
+    <div id="chatbot-container">
+        <div class="vfrc-chat">
+            <!-- Your chat content here -->
+        </div>
+        <button id="close-chatbot-button">Close Chat</button> <!-- Add a close button inside the chat container -->
+    </div>
+    <div id="chatbot-icon">
+        <img src="path/to/your/chatbot-icon.png" alt="Chatbot Icon" id="open-chatbot-button">
+    </div>
 
-    (function(d, t) {
-      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '661177d3da0ccc92fa634e1e' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          render: {
-            mode: 'embedded',
-            target: document.getElementById('chatbot-container'),
-          },
-          autostart: true
-        });
-      }
-      v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
-      v.type = "text/javascript"; 
-      s.parentNode.insertBefore(v, s);
-    })(document, 'script');
-  });
-</script>
+    <script>
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const overlay = document.getElementById('overlay');
+        const content = document.getElementById('content');
+
+        function openChat() {
+            chatbotContainer.style.display = 'block';
+            overlay.style.display = 'block';
+            content.classList.add('blur-background');
+        }
+
+        function closeChat() {
+            chatbotContainer.style.display = 'none';
+            overlay.style.display = 'none';
+            content.classList.remove('blur-background');
+        }
+
+        document.getElementById('open-chatbot-button').addEventListener('click', openChat);
+        document.getElementById('close-chatbot-button').addEventListener('click', closeChat);
+    </script>
 				</body>
 </html>
