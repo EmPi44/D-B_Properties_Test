@@ -364,24 +364,6 @@ ol, ul {
     width: 70%;
     height: 70%;
   }
-  .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    background-color: #ff5c5c;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .close-button:before {
-    content: '×';
-    font-size: 20px;
-    color: white;
-  }
 </style>
 </head>
 <body class="home page-template page-template-elementor_canvas page page-id-2 page-parent ast-desktop ast-page-builder-template ast-no-sidebar astra-4.6.14 ast-single-post ast-inherit-site-logo-transparent ast-hfb-header elementor-default elementor-template-canvas elementor-kit-7 elementor-page elementor-page-2">
@@ -1529,7 +1511,6 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
 			</script>
 	<div id="chatbot-container">
-  <div class="close-button"></div> <!-- Existing close button -->
   <div class="vfrc-chat">
     <!-- Chat content goes here -->
   </div>
@@ -1539,13 +1520,29 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
   <img src="chat-icon.png" alt="Chatbot Icon">
 </div>
 
-<script>
+<script type="text/javascript">
+  (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        window.voiceflow.chat.load({
+          verify: { projectID: '661177d3da0ccc92fa634e1e' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production'
+        }).then(function(instance) {
+          // Add event listener to the End Chat button after the chatbot is loaded
+          instance.on('event_name', function() {
+            // This is a placeholder. Replace 'event_name' with the actual event or use the ID/class found.
+            document.querySelector('.end-chat-class').addEventListener('click', function() {
+              document.getElementById('chatbot-container').style.display = 'none';
+            });
+          });
+        });
+      }
+      v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+  })(document, 'script');
+
   document.getElementById('chatbot-icon').addEventListener('click', function() {
     document.getElementById('chatbot-container').style.display = 'block';
-  });
-
-  document.querySelector('.close-button').addEventListener('click', function() {
-    document.getElementById('chatbot-container').style.display = 'none';
   });
 </script>
 </body>
